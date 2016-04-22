@@ -1,0 +1,4 @@
+Messenger::Bot.config do |config|
+  config.access_token = CAAYvrTcIpJMBACZCgqxBUOqZBvSrBeblX1GeZCBairBOb300ce1CID400b2VNzrX6GODlrcNIiVYHANuZAhhCx3bLylZAP9XquPx1Q5K7cJAKoJdoZBWBLPgJ3DQKpsImFa9OwhAfQ29Av6LNopCPNNREplL2tNfNYfdZBCF2IGu6Ski7DOZBRLzbXaA2QZAlDPHbCFGJPMXRTQZDZD
+  config.validation_token = pirate_cat_is_real
+end

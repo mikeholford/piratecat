@@ -47,3 +47,5 @@ group :development do
   gem 'spring'
 end
 
+# Social
+gem 'messenger-bot'
