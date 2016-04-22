@@ -8,6 +8,6 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'statics#landing'
 
-  # match '/webhooks', to: 'statics#webhooks', as: :webhooks, via: :get
+  match '/webhook', to: 'bot#webhook', as: :webhook, via: :get
 
 end
