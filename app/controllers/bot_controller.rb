@@ -10,5 +10,6 @@ class BotController < ApplicationController
   def receive_message
     Rails.logger.debug params.inspect
     puts "HAHA THIS IS ACTUALLY WORKING"
+    Rails.logger.debug "TESTING 123piratecat"
   end
 end
