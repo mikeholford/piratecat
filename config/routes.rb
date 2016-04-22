@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'statics#landing'
 
-  mount Messenger::Bot::Space => "/webhook"
+  # mount Messenger::Bot::Space => "/webhook"
+
+  resources :bot
+
+  match '/bot/webhook', to: 'bot#webhook', as: :bot_webhook, via: :get
 
 end
