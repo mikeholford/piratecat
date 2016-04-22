@@ -6,10 +6,12 @@ class MessengerBotController < ApplicationController
   end
 
   def delivery(event, sender)
+    sender.reply({ text: "Reply: #{event['message']['text']}" })
     #BlahBlah
   end
 
   def postback(event, sender)
+    sender.reply({ text: "Reply: #{event['message']['text']}" })
     #BlahBlah
   end
 
