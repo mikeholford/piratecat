@@ -7,9 +7,7 @@ Rails.application.routes.draw do
   root 'statics#landing'
 
   # mount Messenger::Bot::Space => "/webhook"
-
-  resources :bot
-
   match '/bot/webhook', to: 'bot#webhook', as: :bot_webhook, via: :get
+
 
 end
