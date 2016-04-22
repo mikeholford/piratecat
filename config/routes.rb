@@ -7,7 +7,10 @@ Rails.application.routes.draw do
   root 'statics#landing'
 
   # mount Messenger::Bot::Space => "/webhook"
-  match '/bot/webhook', to: 'bot#webhook', as: :bot_webhook, via: :get
+
+  get 'bot/webhook' => 'bot#webhook'
+  post 'bot/webhook' => 'bot#receive_message'
+
 
 
 end
