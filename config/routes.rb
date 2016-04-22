@@ -10,6 +10,4 @@ Rails.application.routes.draw do
 
   # match '/webhooks', to: 'statics#webhooks', as: :webhooks, via: :get
 
-  mount Messenger::Bot::Space => "/webhook"
-
 end
