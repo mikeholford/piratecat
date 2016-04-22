@@ -6,4 +6,8 @@ class BotController < ApplicationController
      render text: 'error' and return
    end
   end
+
+  def receive_messages
+    debug(params)
+  end
 end
