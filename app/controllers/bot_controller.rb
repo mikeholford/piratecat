@@ -8,6 +8,6 @@ class BotController < ApplicationController
   end
 
   def receive_messages
-    debug(params)
+    Rails.logger.debug params.inspect
   end
 end
