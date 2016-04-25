@@ -1,4 +1,7 @@
 class BotController < ApplicationController
+
+  skip_before_action :verify_authenticity_token
+
   def webhook
     Rails.logger.debug "Webhook working bitches!"
    if params['hub.verify_token'] == "pirate_cat_verify"
