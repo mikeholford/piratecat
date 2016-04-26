@@ -27,7 +27,7 @@ class BotController < ApplicationController
 
   end
 
-  def send_text_message
+  def send_text_message(sender, text)
     page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
 
     body = {
