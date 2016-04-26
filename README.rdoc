@@ -1,28 +1,17 @@
-== README
+== PIRATE CAT - A Ruby on Rails Facebook Bot
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Pitate Cat was created as an experiment to trial a Facebook Bot setup with ruby on rails.
 
-Things you may want to cover:
+Things it does:
 
-* Ruby version
+* Replies with a generic message by repeating what you said
 
-* System dependencies
+Things to do:
 
-* Configuration
+* Customise messages so that they are dependant on what you type with certain key words.
 
-* Database creation
+* Clean up code/refactor controller
 
-* Database initialization
+* Write tests for easy debugging
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Currently it is in dev mode and should only work if signed in as me but it can give you an idea on the code that was used.
