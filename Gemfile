@@ -49,3 +49,4 @@ end
 
 # Social
 gem 'messenger-bot'
+gem 'httparty'
