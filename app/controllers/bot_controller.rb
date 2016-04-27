@@ -71,34 +71,4 @@ class BotController < ApplicationController
     )
   end
 
-  def repeat_response
-    message: {
-      text: text
-    }
-  end
-
-  def picture_response
-    message: {
-      attachment:{
-        type: "template",
-        payload: {
-          template_type: "button",
-          text: "What picture would you like to see?",
-          buttons: [
-            {
-              type: "web_url",
-              url: "https://suddenlycat.com/wp-content/uploads/2015/03/Pirate-Cat-Costume1.jpg",
-              title: "Me as a pirate"
-            },
-            {
-              type: "web_url",
-              url: "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
-              title: "Me as a cow"
-            }
-          ]
-        }
-      }
-    }
-  end
-
 end
