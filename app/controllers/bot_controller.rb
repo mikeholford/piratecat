@@ -11,6 +11,8 @@ class BotController < ApplicationController
   end
 
   def receive_message
+
+
     puts "Message recieved"
     Rails.logger.debug params.inspect
 
@@ -26,6 +28,9 @@ class BotController < ApplicationController
      render nothing: true
 
   end
+
+
+
 
   def send_text_message(sender, text)
     page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
