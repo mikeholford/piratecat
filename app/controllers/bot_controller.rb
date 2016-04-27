@@ -52,9 +52,10 @@ class BotController < ApplicationController
   end
 
   def repeat_response
-    response = {
+    @response = {
       text: text
     }
+    return @response
   end
 
   def picture_response
