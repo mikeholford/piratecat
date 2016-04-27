@@ -12,16 +12,16 @@ class BotController < ApplicationController
 
   def receive_message
 
-
-    puts "Message recieved"
-    Rails.logger.debug params.inspect
-
      if params[:entry]
        messaging_events = params[:entry][0][:messaging]
          messaging_events.each do |event|
          sender = event[:sender][:id]
          if (text = event[:message] && event[:message][:text])
-           send_text_message(sender, "MEOW! You said: #{text}. Love Pirate Cat")
+          if text.to_s.downcase.include? "pictures"
+            send_links(sender, text)
+          else
+            repeat_text(sender, "You said: #{text}")
+          end
          end
        end
      end
@@ -32,16 +32,33 @@ class BotController < ApplicationController
 
 
 
-  def send_text_message(sender, text)
+  def repeat_text(sender, text)
     page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
 
     body = {
       recipient: {
         id: sender
       },
-      # message: {
-      #   text: text
-      # }
+      message: {
+        text: text
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_access_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+
+
+  def send_links(sender, text)
+    page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
+
+    body = {
+      recipient: {
+        id: sender
+      },
       message: {
         attachment:{
           type: "template",
