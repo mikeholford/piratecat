@@ -5,16 +5,6 @@
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
-
-  <!-- Exponea  -->
-  <script type="text/javascript">!function(i,t){function e(e){return function(){var n=arguments;if("initialize"==e&&n&&n[0].modify&&n[0].modify.overlay&&"loading"==t.readyState){var a="__inf__overlay__";t.write('<div id="'+a+'" style="position:absolute;background:#fff;left:0;top:0;width:100%;height:100%;z-index:1000000"></div>'),setTimeout(function(){var e=t.getElementById(a);e&&t.body.removeChild(e),i.exponea.__=!0},n[0].modify.delay||500)}this._.push([e,arguments])}}if(!i.exponea){var n,a,o="initialize identify update track trackLink trackEnhancedEcommerce getHtml showHtml showForm ping getAbTest".split(" "),r=t.createElement("script"),d="https:"===t.location.protocol?"https:":"http:";for(i.exponea={_:[]},a=0;a<o.length;a++)n=o[a],i.exponea[n]=e(n);r.type="text/javascript",r.async=!0,r.src=d+"//api.exponea.com/js/exponea.min.js",t.getElementsByTagName("head")[0].appendChild(r)}}(window,document);</script>
-<script type="text/javascript">
-    exponea.initialize({
-        token: 'cc7d1854-0c0f-11e6-b2ac-141877340e97'
-    //, customer: window.loggedInCustomer // replace window.loggedInCustomer with id of your web site customer, e.g. "john.smith@gmail.com"
-    });
-</script>
-
 </head>
 <body>
 
