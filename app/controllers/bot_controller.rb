@@ -39,7 +39,10 @@ class BotController < ApplicationController
       recipient: {
         id: sender
       },
-      repeat_response
+      # message: {
+      #   text: text
+      # }
+      message: repeat_response
     }.to_json
     response = HTTParty.post(
       "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_access_token}",
@@ -49,7 +52,7 @@ class BotController < ApplicationController
   end
 
   def repeat_response
-    message: {
+    response = {
       text: text
     }
   end
