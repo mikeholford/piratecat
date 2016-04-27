@@ -47,17 +47,17 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "What do you want to do next?",
+            text: "What picture would you like to see?",
             buttons: [
               {
                 type: "web_url",
-                url: "https://damp-tundra-30325.herokuapp.com/",
-                title: "Show Website"
+                url: "https://suddenlycat.com/wp-content/uploads/2015/03/Pirate-Cat-Costume1.jpg",
+                title: "Me as a pirate"
               },
               {
-                type: "postback",
-                title: "Start Chatting",
-                payload: "USER_DEFINED_PAYLOAD"
+                type: "web_url",
+                url: "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
+                title: "Me as a cow"
               }
             ]
           }
