@@ -76,7 +76,7 @@ class BotController < ApplicationController
                   type: "web_url",
                   url: "#{url}",
                   title: "#{title}"
-                },
+                }
               end
             ]
           }
