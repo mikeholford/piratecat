@@ -18,12 +18,7 @@ class BotController < ApplicationController
          sender = event[:sender][:id]
          if (text = event[:message] && event[:message][:text])
           if text.to_s.downcase.include? "pictures"
-            links = {
-              "Me as a pirate" => "https://suddenlycat.com/wp-content/uploads/2015/03/Pirate-Cat-Costume1.jpg",
-              "Me as a moo cow" => "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
-              "Me as a frog" => "http://cf.ltkcdn.net/wp-content/uploads/2014/10/frog-cat1-294x300.jpg",
-            }
-            send_links(sender, links)
+            send_links(sender, text)
           else
             repeat_text(sender, "You said: #{text}")
           end
@@ -57,7 +52,7 @@ class BotController < ApplicationController
 
 
 
-  def send_links(sender, links)
+  def send_links(sender, text)
     page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
 
     body = {
@@ -71,13 +66,16 @@ class BotController < ApplicationController
             template_type: "button",
             text: "What picture would you like to see?",
             buttons: [
-              links.each do |title, url|
-                {
-                  type: "web_url",
-                  url: "#{url}",
-                  title: "#{title}"
-                }
-              end
+              {
+                type: "web_url",
+                url: "https://suddenlycat.com/wp-content/uploads/2015/03/Pirate-Cat-Costume1.jpg",
+                title: "Me as a pirate"
+              },
+              {
+                type: "web_url",
+                url: "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
+                title: "Me as a cow"
+              }
             ]
           }
         }
