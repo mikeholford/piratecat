@@ -36,8 +36,6 @@ class BotController < ApplicationController
           quick_responses = {
             'haha' => '😂😂😂',
             'lol' => '😂😂😂',
-            'yo' => 'hey how are you?',
-            'hi' => 'hey how are you?',
             'hey' => 'hey how are you?',
             'good' => 'that is great!',
             'thanks' => 'no problem',
@@ -51,6 +49,7 @@ class BotController < ApplicationController
             if text.include?(qr)
               plain_text(sender, text_response)
               trigger_match = true
+              break
             end
           end
 
