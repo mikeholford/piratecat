@@ -26,7 +26,8 @@ class BotController < ApplicationController
 
           triggers = {
             'meow' => 'joke_trigger',
-            'help' => 'help_trigger'
+            'help' => 'help_trigger',
+            'receipt' => 'receipt_trigger'
           }
 
           trigger_match = false
@@ -64,7 +65,6 @@ class BotController < ApplicationController
 
 
   def plain_text(sender, text)
-    puts "SEND PLAIN"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
@@ -86,7 +86,6 @@ class BotController < ApplicationController
 
 
   def joke_trigger(sender, text)
-    puts "send JOKE"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     jokes = [
@@ -112,7 +111,6 @@ class BotController < ApplicationController
   end
 
   def help_trigger(sender, text)
-    puts "send HELP"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
    body = {
@@ -122,6 +120,69 @@ class BotController < ApplicationController
     message: {
       text: "Need some help? Here are some options. Type MEOW for a cat joke, RECEIPT for a receipt of your last purchase, PRODUCTS for the top 3 tshirts in our shop, PICTURE for a fun picture of me and FACT for a fun cat fact!"
     }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+  def receipt_trigger
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        attachment:{
+          type: "template",
+          payload: {
+            template_type: "receipt",
+            "recipient_name":"Mike Holford",
+            "order_number":"12345678902",
+            "currency":"AUD",
+            "payment_method":"Visa 2345",
+            "order_url":"http://petersapparel.parseapp.com/order?order_id=123456",
+            "timestamp":"1428444852",
+            "elements":[
+              {
+                "title":"Pirate Cat T-Shirt",
+                "subtitle":"100% Soft and Luxurious Kitten",
+                "quantity":2,
+                "price":50,
+                "currency":"AUD",
+                "image_url":"http://petersapparel.parseapp.com/img/whiteshirt.png"
+              }
+            ],
+            "address":{
+              "street_1":"5/142 Pittwater Road",
+              "street_2":"",
+              "city":"Sydney",
+              "postal_code":"2095",
+              "state":"NSW",
+              "country":"AU"
+            },
+            "summary":{
+              "subtotal":75.00,
+              "shipping_cost":4.95,
+              "total_tax":6.19,
+              "total_cost":56.14
+            },
+            "adjustments":[
+              {
+                "name":"New Customer Discount",
+                "amount":20
+              },
+              {
+                "name":"$10 Off Coupon",
+                "amount":10
+              }
+            ]
+          }
+        }
+      }
     }.to_json
     response = HTTParty.post(
       "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
