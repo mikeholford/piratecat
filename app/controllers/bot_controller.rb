@@ -19,8 +19,7 @@ class BotController < ApplicationController
       messaging_events.each do |event|
         sender = event[:sender][:id]
 
-        if event[:message][:text] # User has sent a text response
-          response = event[:message][:text]
+        if (response = event[:message] && event[:message][:text]) # User has sent a text response
           text = response.to_s.downcase
 
           triggers = {
@@ -32,6 +31,7 @@ class BotController < ApplicationController
 
           triggers.each do |trig, trig_method|
             if text.include?(trig)
+              puts "TEXT includes #{trig}"
               send(trig_method, sender, text)
               trigger_match = true
               break
