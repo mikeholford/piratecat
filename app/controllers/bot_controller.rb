@@ -40,6 +40,7 @@ class BotController < ApplicationController
 
           if trigger_match == false
             plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+            puts "NO MATCH"
           end
 
           puts "CHECK1"
@@ -61,6 +62,7 @@ class BotController < ApplicationController
 
 
   def plain_text(sender, text)
+    puts "SEND PLAIN"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
@@ -82,6 +84,7 @@ class BotController < ApplicationController
 
 
   def joke_trigger(sender, text)
+    puts "send JOKE"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     jokes = [
@@ -107,6 +110,7 @@ class BotController < ApplicationController
   end
 
   def help_trigger(sender, text)
+    puts "send HELP"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
    body = {
