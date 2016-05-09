@@ -28,14 +28,18 @@ class BotController < ApplicationController
             'help' => 'help_trigger'
           }
 
+          trigger_match = false
+
           triggers.each do |trig, trig_method|
             if text.include?(trig)
               send(trig_method, sender, text)
-              break
+              trigger_match = true
             end
           end
 
-          plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+          if trigger_match == false
+            plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+          end
 
         elsif event[:postback][:payload] # User has sent a payload
           plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
