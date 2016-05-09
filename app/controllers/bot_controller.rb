@@ -50,9 +50,11 @@ class BotController < ApplicationController
 
           puts "CHECK1"
 
-        elsif event[:postback][:payload] # User has sent a payload
+        end
+
+        if (payload = event[:postback] && event[:postback][:payload])
           plain_text(sender, "YAY Gotcha!")
-        else
+        # else
           # plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         end
 
