@@ -30,8 +30,7 @@ class BotController < ApplicationController
 
           triggers.each do |trig, trig_method|
             if text.include?(trig)
-              method = trig_method.constantize
-              method(sender, text)
+              send(trig_method, sender, text)
               break
             end
           end
