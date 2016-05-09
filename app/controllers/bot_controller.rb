@@ -212,7 +212,7 @@ class BotController < ApplicationController
       id: sender
     },
     message: {
-      text: "Need some help? Here are some options. Type MEOW / JOKE for a cat joke, RECEIPT for a receipt of your last purchase, PRODUCTS for the top 3 tshirts in our shop, START to begin again. <strong>BOOM</strong>"
+      text: "Need some help? Here are some options. \n - MEOW / JOKE for a cat joke \n - RECEIPT for a receipt of your last purchase \n - PRODUCTS for the top 3 tshirts in our shop \n START to begin again."
     }
     }.to_json
     response = HTTParty.post(
