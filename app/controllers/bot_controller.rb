@@ -13,8 +13,6 @@ class BotController < ApplicationController
 
   def receive_message
 
-    set_page_access
-
     if params[:entry]
 
       messaging_events = params[:entry][0][:messaging]
@@ -38,13 +36,12 @@ class BotController < ApplicationController
             end
           end
 
-          plain_text(sender, "Hmmm.. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
-          break
+          plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
 
         elsif event[:postback][:payload] # User has sent a payload
-          plain_text(sender, "Hmmm.. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+          plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         else
-          plain_text(sender, "Hmmm.. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+          plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         end
 
       end
@@ -57,6 +54,8 @@ class BotController < ApplicationController
 
 
   def plain_text(sender, text)
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
     body = {
       recipient: {
         id: sender
@@ -66,13 +65,15 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
   end
 
   def joke_trigger
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
     jokes = [
       "What is it called when a cat wins a dog show? - A CAT_HAS_TROPHY!",
       "Did you hear about the cat who drank 5 bowls of water? He set a new lap record.",
@@ -89,13 +90,15 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
   end
 
   def help_trigger
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
    body = {
     recipient: {
       id: sender
@@ -105,7 +108,7 @@ class BotController < ApplicationController
     }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -167,8 +170,8 @@ class BotController < ApplicationController
     )
   end
 
-  def set_page_access
-    return "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
-  end
+  # def set_page_access
+  #   return "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+  # end
 
 end
