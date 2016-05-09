@@ -19,7 +19,8 @@ class BotController < ApplicationController
       messaging_events.each do |event|
         sender = event[:sender][:id]
 
-        if (response = event[:message] && event[:message][:text]) # User has sent a text response
+        if event[:message][:text] # User has sent a text response
+          response = event[:message][:text]
           text = response.to_s.downcase
 
           triggers = {
