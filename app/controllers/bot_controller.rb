@@ -44,8 +44,7 @@ class BotController < ApplicationController
           end
 
           if trigger_match == false
-            plain_text(sender, "Hmmm... Not sure what you mean? Try typing 'HELP'")
-            plain_text(sender, "Let me send you some options...")
+            plain_text(sender, "😕 Hmmm... Not sure what you mean? Ask me for help if you need some guidance 👊'")
             generic_trigger(sender, text)
             puts "NO MATCH"
           end
@@ -82,7 +81,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "Hello! Welcome to the Pirate Cat Shop! Select an option below to get started. Or type MEOW to hear a funny cat joke.",
+            text: "👋 Hello! \n \n Welcome to the Pirate Cat Shop! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
             buttons: [
               {
                 type: "postback",
@@ -123,7 +122,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "Check out some options below:",
+            text: "Try some options below 👇👇👇",
             buttons: [
               {
                 type: "postback",
@@ -194,7 +193,7 @@ class BotController < ApplicationController
         id: sender
       },
       message: {
-        text: jokes.sample
+        text: jokes.sample + "😂😂😂"
       }
     }.to_json
     response = HTTParty.post(
@@ -212,7 +211,7 @@ class BotController < ApplicationController
       id: sender
     },
     message: {
-      text: "Need some help? Here are some options. \n - MEOW / JOKE for a cat joke \n - RECEIPT for a receipt of your last purchase \n - PRODUCTS for the top 3 tshirts in our shop \n START to begin again."
+      text: "Need some help? Here are some options. \n  • MEOW / JOKE for a cat joke \n   • RECEIPT for a receipt of your last purchase \n   • PRODUCTS for the top 3 tshirts in our shop \n  • START to begin again."
     }
     }.to_json
     response = HTTParty.post(
@@ -394,7 +393,7 @@ class BotController < ApplicationController
         id: sender
       },
       message: {
-        text: "Saved to your favourites! Meow!"
+        text: "Saved to your favourites! 🌟🌟🌟"
       }
     }.to_json
     response = HTTParty.post(
@@ -403,65 +402,5 @@ class BotController < ApplicationController
       headers: { 'Content-Type' => 'application/json' }
     )
   end
-
-
-
-  def repeat_text(sender, text)
-
-    body = {
-      recipient: {
-        id: sender
-      },
-      message: {
-        text: text
-      }
-    }.to_json
-    response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
-      body: body,
-      headers: { 'Content-Type' => 'application/json' }
-    )
-  end
-
-
-
-  def send_links(sender, text)
-
-    body = {
-      recipient: {
-        id: sender
-      },
-      message: {
-        attachment:{
-          type: "template",
-          payload: {
-            template_type: "button",
-            text: "What picture would you like to see?",
-            buttons: [
-              {
-                type: "web_url",
-                url: "https://suddenlycat.com/wp-content/uploads/2015/03/Pirate-Cat-Costume1.jpg",
-                title: "Me as a pirate"
-              },
-              {
-                type: "web_url",
-                url: "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
-                title: "Me as a cow"
-              }
-            ]
-          }
-        }
-      }
-    }.to_json
-    response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
-      body: body,
-      headers: { 'Content-Type' => 'application/json' }
-    )
-  end
-
-  # def set_page_access
-  #   return "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
-  # end
 
 end
