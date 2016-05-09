@@ -44,7 +44,7 @@ class BotController < ApplicationController
           end
 
           if trigger_match == false
-            generic_trigger(sender, text)
+            plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
             puts "NO MATCH"
           end
 
@@ -53,7 +53,10 @@ class BotController < ApplicationController
         end
 
         if (payload = event[:postback] && event[:postback][:payload])
-          plain_text(sender, "YAY Gotcha!")
+          puts "PAYLOAD IS: #{payload}"
+          puts "PAYLOAD DOWNCASE IS: #{payload.downcase}"
+          plain_text(sender, "Hold tight...")
+          send(payload, sender, text)
         # else
           # plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         end
@@ -82,7 +85,7 @@ class BotController < ApplicationController
               {
                 type: "postback",
                 title: "View Top 3 T-shirts",
-                payload: "TOP_3_TSHIRTS"
+                payload: "top_three_shirts"
               },
               {
                 type: "web_url",
@@ -166,6 +169,7 @@ class BotController < ApplicationController
   end
 
   def receipt_trigger(sender, text)
+    puts "ROGER"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
@@ -219,6 +223,27 @@ class BotController < ApplicationController
             ]
           }
         }
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+    puts "ROGER OVER"
+  end
+
+
+
+  def top_three_shirts(sender, text)
+     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        text: "Here are the top 3!"
       }
     }.to_json
     response = HTTParty.post(
