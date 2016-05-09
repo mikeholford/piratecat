@@ -29,7 +29,7 @@ class BotController < ApplicationController
             'joke' => 'joke_trigger',
             'meow' => 'joke_trigger',
             'help' => 'help_trigger',
-            'receipt' => 'receipt_trigger'
+            'receipt' => 'receipt_trigger',
             'products' => 'top_three_shirts'
           }
 
