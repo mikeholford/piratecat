@@ -88,9 +88,14 @@ class BotController < ApplicationController
                 payload: "top_three_shirts"
               },
               {
-                type: "web_url",
-                url: "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
-                title: "Me as a cow"
+                type: "postback",
+                title: "Tell me a cat joke",
+                payload: "joke_trigger"
+              },
+              {
+                type: "postback",
+                title: "Show me my options",
+                payload: "help_trigger"
               }
             ]
           }
@@ -181,44 +186,44 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "receipt",
-            "recipient_name":"Mike Holford",
-            "order_number":"12345678902",
-            "currency":"AUD",
-            "payment_method":"Visa 2345",
-            "order_url":"http://petersapparel.parseapp.com/order?order_id=123456",
-            "timestamp":"1428444852",
-            "elements":[
+            recipient_name: "Mike Holford",
+            order_number: "12345678902",
+            currency: "AUD",
+            payment_method: "Visa 2345",
+            order_url: "http://petersapparel.parseapp.com/order?order_id=123456",
+            timestamp: "1428444852",
+            elements: [
               {
-                "title":"Pirate Cat T-Shirt",
-                "subtitle":"100% Soft and Luxurious Kitten",
-                "quantity":2,
-                "price":50,
-                "currency":"AUD",
-                "image_url":"http://petersapparel.parseapp.com/img/whiteshirt.png"
+                title: "Pirate Cat T-Shirt",
+                subtitle: "100% Soft and Luxurious Kitten",
+                quantity: 2,
+                price: 50,
+                currency: "AUD",
+                image_url: "http://petersapparel.parseapp.com/img/whiteshirt.png"
               }
             ],
-            "address":{
-              "street_1":"5/142 Pittwater Road",
-              "street_2":"",
-              "city":"Sydney",
-              "postal_code":"2095",
-              "state":"NSW",
-              "country":"AU"
+            address:{
+              street_1: "5/142 Pittwater Road",
+              street_2: "",
+              city: "Sydney",
+              postal_code: "2095",
+              state: "NSW",
+              country: "AU"
             },
-            "summary":{
-              "subtotal":75.00,
-              "shipping_cost":4.95,
-              "total_tax":6.19,
-              "total_cost":56.14
+            summary:{
+              subtotal: 75.00,
+              shipping_cost: 4.95,
+              total_tax: 6.19,
+              total_cost: 56.14
             },
-            "adjustments":[
+            adjustments:[
               {
-                "name":"New Customer Discount",
-                "amount":20
+                name: "New Customer Discount",
+                amount: 20
               },
               {
-                "name":"$10 Off Coupon",
-                "amount":10
+                name: "$10 Off Coupon",
+                amount: 10
               }
             ]
           }
@@ -243,7 +248,98 @@ class BotController < ApplicationController
         id: sender
       },
       message: {
-        text: "Here are the top 3!"
+        attachment:{
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [
+              {
+                title: "Checked Pirate Shirt",
+                image_url: "http://petersapparel.parseapp.com/img/item100-thumb.png",
+                subtitle: "Soft white cotton t-shirt is back in style",
+                buttons: [
+                  {
+                    type: "web_url",
+                    url: "https://petersapparel.parseapp.com/view_item?item_id=100",
+                    title: "View Item"
+                  },
+                  {
+                    type: "web_url",
+                    url: "https://petersapparel.parseapp.com/buy_item?item_id=100",
+                    title: "Buy Item"
+                  },
+                  {
+                    type: "postback",
+                    title: "Bookmark Item",
+                    payload: "bookmark_trigger"
+                  }
+                ]
+              },
+              {
+                title: "Funky Cat Shirt",
+                image_url: "http://petersapparel.parseapp.com/img/item101-thumb.png",
+                subtitle: "Soft white cotton t-shirt is back in style",
+                buttons: [
+                  {
+                    type: "web_url",
+                    url: "https://petersapparel.parseapp.com/view_item?item_id=101",
+                    title: "View Item"
+                  },
+                  {
+                    type: "web_url",
+                    url: "https://petersapparel.parseapp.com/buy_item?item_id=101",
+                    title: "Buy Item"
+                  },
+                  {
+                    type: "postback",
+                    title: "Bookmark Item",
+                    payload: "bookmark_trigger"
+                  }
+                ]
+              },
+              {
+                title: "Crazy Cat Lady Shirt",
+                image_url: "http://petersapparel.parseapp.com/img/item100-thumb.png",
+                subtitle: "Soft white cotton t-shirt is back in style",
+                buttons: [
+                  {
+                    type: "web_url",
+                    url: "https://petersapparel.parseapp.com/view_item?item_id=100",
+                    title: "View Item"
+                  },
+                  {
+                    type: "web_url",
+                    url: "https://petersapparel.parseapp.com/buy_item?item_id=100",
+                    title: "Buy Item"
+                  },
+                  {
+                    type: "postback",
+                    title: "Bookmark Item",
+                    payload: "bookmark_trigger"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+  def bookmark_trigger(sender, text)
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        text: "Saved to your favourites! Meow!"
       }
     }.to_json
     response = HTTParty.post(
