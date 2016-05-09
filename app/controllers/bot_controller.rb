@@ -2,8 +2,6 @@ class BotController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
-  before_action :set_page_access
-
   def webhook
    if params['hub.verify_token'] == "pirate_cat_verify"
      render text: params['hub.challenge'] and return
@@ -14,6 +12,8 @@ class BotController < ApplicationController
 
 
   def receive_message
+
+    set_page_access
 
     if params[:entry]
 
@@ -166,8 +166,6 @@ class BotController < ApplicationController
       headers: { 'Content-Type' => 'application/json' }
     )
   end
-
-  private
 
   def set_page_access
     @page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
