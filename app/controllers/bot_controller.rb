@@ -30,9 +30,24 @@ class BotController < ApplicationController
             'meow' => 'joke_trigger',
             'help' => 'help_trigger',
             'receipt' => 'receipt_trigger'
+            'products' => 'top_three_shirts'
+          }
+
+          quick_responses = {
+            'haha' => '😂😂😂',
+            'hi' => 'hey how are you?',
+            'good' => 'that is great!',
+            'i love you' => 'i love you too'
           }
 
           trigger_match = false
+
+          quick_responses.each do |qr, text_response|
+            if text.include?(qr)
+              plain_text(sender, text_response)
+              trigger_match = true
+            end
+          end
 
           triggers.each do |trig, trig_method|
             if text.include?(trig)
@@ -44,7 +59,7 @@ class BotController < ApplicationController
           end
 
           if trigger_match == false
-            plain_text(sender, "😕 Hmmm... Not sure what you mean? Ask me for help if you need some guidance 👊'")
+            plain_text(sender, "😕 Hmmm... Not sure what you mean? Ask me for help if you need some guidance 👊")
             generic_trigger(sender, text)
             puts "NO MATCH"
           end
@@ -81,7 +96,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "👋 Hello! \n \n Welcome to the Pirate Cat Shop! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
+            text: "👋 Hello!\n\nWelcome to the Pirate Cat Shop! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
             buttons: [
               {
                 type: "postback",
@@ -211,7 +226,7 @@ class BotController < ApplicationController
       id: sender
     },
     message: {
-      text: "Need some help? Here are some options. \n  • MEOW / JOKE for a cat joke \n   • RECEIPT for a receipt of your last purchase \n   • PRODUCTS for the top 3 tshirts in our shop \n  • START to begin again."
+      text: "Need some help? Here are some options.\n\n • MEOW / JOKE for a cat joke \n • RECEIPT for a receipt of your last purchase \n • PRODUCTS for the top 3 tshirts in our shop \n • START to begin again."
     }
     }.to_json
     response = HTTParty.post(
