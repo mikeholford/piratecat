@@ -35,8 +35,13 @@ class BotController < ApplicationController
 
           quick_responses = {
             'haha' => '😂😂😂',
+            'lol' => '😂😂😂',
+            'yo' => 'hey how are you?',
             'hi' => 'hey how are you?',
+            'hey' => 'hey how are you?',
             'good' => 'that is great!',
+            'thanks' => 'no problem',
+            'thanks!' => 'no problem',
             'i love you' => 'i love you too'
           }
 
@@ -237,6 +242,9 @@ class BotController < ApplicationController
   end
 
   def receipt_trigger(sender, text)
+
+    plain_text(sender, "Fetching your recent purchase...")
+
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
@@ -310,6 +318,9 @@ class BotController < ApplicationController
 
 
   def top_three_shirts(sender, text)
+     plain_text(sender, "Sure! Just fetching the our top 3 sellers at the moment...")
+
+
      pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
