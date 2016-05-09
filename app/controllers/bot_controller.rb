@@ -193,7 +193,7 @@ class BotController < ApplicationController
           payload:{
             template_type: "receipt",
             recipient_name: "Stephane Crozatier",
-            order_number: "12345678902",
+            order_number: "123456454345354378902",
             currency: "USD",
             payment_method: "Visa 2345",
             order_url: "http://petersapparel.parseapp.com/order?order_id=123456",
