@@ -21,7 +21,8 @@ class BotController < ApplicationController
 
         if (text = event[:message] && event[:message][:text]) # User has sent a text response
           # response = event[:message][:text]
-          text.to_s.downcase
+          text = text.downcase
+          puts "text is now: #{text}"
 
           triggers = {
             'meow' => 'joke_trigger',
