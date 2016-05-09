@@ -25,6 +25,8 @@ class BotController < ApplicationController
           puts "text is now: #{text}"
 
           triggers = {
+            'start' => 'generic_trigger',
+            'joke' => 'joke_trigger',
             'meow' => 'joke_trigger',
             'help' => 'help_trigger',
             'receipt' => 'receipt_trigger'
@@ -42,14 +44,14 @@ class BotController < ApplicationController
           end
 
           if trigger_match == false
-            plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+            generic_trigger(sender, text)
             puts "NO MATCH"
           end
 
           puts "CHECK1"
 
-        # elsif event[:postback][:payload] # User has sent a payload
-        #   plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+        elsif event[:postback][:payload] # User has sent a payload
+          plain_text(sender, "YAY Gotcha!")
         else
           # plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         end
@@ -61,8 +63,41 @@ class BotController < ApplicationController
 
   end
 
+  def generic_trigger(sender, text)
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
-
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        attachment:{
+          type: "template",
+          payload: {
+            template_type: "button",
+            text: "Hello! Welcome to the Pirate Cat Shop! Select an option below to get started. Or type MEOW to hear a funny cat joke.",
+            buttons: [
+              {
+                type: "postback",
+                title: "View Top 3 T-shirts",
+                payload: "TOP_3_TSHIRTS"
+              },
+              {
+                type: "web_url",
+                url: "http://cf.ltkcdn.net/wp-content/uploads/2014/10/cow-cat-300x199.jpg",
+                title: "Me as a cow"
+              }
+            ]
+          }
+        }
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
 
   def plain_text(sender, text)
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
