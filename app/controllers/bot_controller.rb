@@ -25,7 +25,7 @@ class BotController < ApplicationController
           puts "text is now: #{text}"
 
           triggers = {
-            'start' => 'generic_trigger',
+            'start' => 'welcome_trigger',
             'joke' => 'joke_trigger',
             'meow' => 'joke_trigger',
             'help' => 'help_trigger',
@@ -44,7 +44,9 @@ class BotController < ApplicationController
           end
 
           if trigger_match == false
-            plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+            plain_text(sender, "Hmmm... Not sure what you mean? Try typing 'HELP'")
+            plain_text(sender, "Let me send you some options...")
+            generic_trigger(sender, text)
             puts "NO MATCH"
           end
 
@@ -68,7 +70,7 @@ class BotController < ApplicationController
 
   end
 
-  def generic_trigger(sender, text)
+  def welcome_trigger(sender, text)
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
@@ -94,7 +96,48 @@ class BotController < ApplicationController
               },
               {
                 type: "postback",
-                title: "Show me my options",
+                title: "Show me what to type",
+                payload: "help_trigger"
+              }
+            ]
+          }
+        }
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{pa_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+  def generic_trigger(sender, text)
+    pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
+
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        attachment:{
+          type: "template",
+          payload: {
+            template_type: "button",
+            text: "Check out some options below:",
+            buttons: [
+              {
+                type: "postback",
+                title: "View Top 3 T-shirts",
+                payload: "top_three_shirts"
+              },
+              {
+                type: "postback",
+                title: "Tell me a cat joke",
+                payload: "joke_trigger"
+              },
+              {
+                type: "postback",
+                title: "Show me what to type",
                 payload: "help_trigger"
               }
             ]
@@ -169,7 +212,7 @@ class BotController < ApplicationController
       id: sender
     },
     message: {
-      text: "Need some help? Here are some options. Type MEOW for a cat joke, RECEIPT for a receipt of your last purchase, PRODUCTS for the top 3 tshirts in our shop, PICTURE for a fun picture of me and FACT for a fun cat fact!"
+      text: "Need some help? Here are some options. Type MEOW / JOKE for a cat joke, RECEIPT for a receipt of your last purchase, PRODUCTS for the top 3 tshirts in our shop, START to begin again. <strong>BOOM</strong>"
     }
     }.to_json
     response = HTTParty.post(
@@ -180,7 +223,6 @@ class BotController < ApplicationController
   end
 
   def receipt_trigger(sender, text)
-    puts "ROGER"
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
     body = {
@@ -249,7 +291,6 @@ class BotController < ApplicationController
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
-    puts "ROGER OVER"
   end
 
 
