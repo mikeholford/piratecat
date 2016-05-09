@@ -29,7 +29,7 @@ class BotController < ApplicationController
             'joke' => 'joke_trigger',
             'meow' => 'joke_trigger',
             'help' => 'help_trigger',
-            'receipt' => 'receipt_trigger'
+            'receipt' => 'help_trigger'
           }
 
           trigger_match = false
@@ -137,7 +137,13 @@ class BotController < ApplicationController
       "What is it called when a cat wins a dog show? - A CAT_HAS_TROPHY!",
       "Did you hear about the cat who drank 5 bowls of water? He set a new lap record.",
       "What happened when the cat went to the flea circus? He stole the whole show!",
-      "Why don't cats play poker in the jungle? Too many cheetahs."
+      "Why don't cats play poker in the jungle? Too many cheetahs.",
+      "What do you call a cat that has swallowed a duck? A duck filled fatty puss.",
+      "How does the cat get its own way? With friendly purrsuasion.",
+      "What is a cat's favourite car? The Catillac.",
+      "Why did the judge dismiss the entire jury made up of cats? Because each of them was guilty of purrjury.",
+      "Why is it so hard for a leopard to hide? Because he's always spotted.",
+      "What kind of cat will keep your grass short? A Lawn Meower."
     ]
 
     body = {
