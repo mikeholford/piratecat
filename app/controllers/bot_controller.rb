@@ -19,9 +19,9 @@ class BotController < ApplicationController
       messaging_events.each do |event|
         sender = event[:sender][:id]
 
-        if event[:message][:text] # User has sent a text response
-          response = event[:message][:text]
-          text = response.to_s.downcase
+        if (text = event[:message] && event[:message][:text]) # User has sent a text response
+          # response = event[:message][:text]
+          text.to_s.downcase
 
           triggers = {
             'meow' => 'joke_trigger',
@@ -49,7 +49,7 @@ class BotController < ApplicationController
         # elsif event[:postback][:payload] # User has sent a payload
         #   plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         else
-          plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+          # plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         end
 
       end
