@@ -34,6 +34,7 @@ class BotController < ApplicationController
             if text.include?(trig)
               send(trig_method, sender, text)
               trigger_match = true
+              break
             end
           end
 
@@ -41,8 +42,8 @@ class BotController < ApplicationController
             plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
           end
 
-        elsif event[:postback][:payload] # User has sent a payload
-          plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+        # elsif event[:postback][:payload] # User has sent a payload
+        #   plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         else
           plain_text(sender, "Hmmm..Awkward. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         end
@@ -73,6 +74,9 @@ class BotController < ApplicationController
       headers: { 'Content-Type' => 'application/json' }
     )
   end
+
+
+
 
   def joke_trigger(sender, text)
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
