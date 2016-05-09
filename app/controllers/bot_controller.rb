@@ -42,6 +42,8 @@ class BotController < ApplicationController
             plain_text(sender, "Hmmm..no match. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
           end
 
+          puts "CHECK1"
+
         # elsif event[:postback][:payload] # User has sent a payload
         #   plain_text(sender, "Hmmm..payload. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
         else
@@ -50,6 +52,7 @@ class BotController < ApplicationController
 
       end
     end
+    puts "CHECK2"
     render nothing: true
 
   end
