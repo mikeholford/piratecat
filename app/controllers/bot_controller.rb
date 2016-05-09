@@ -66,7 +66,7 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -89,7 +89,7 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -105,7 +105,7 @@ class BotController < ApplicationController
     }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -124,7 +124,7 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -161,14 +161,14 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{set_page_access}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
   end
 
   def set_page_access
-    @page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
+    return "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
   end
 
 end
