@@ -2,6 +2,8 @@ class BotController < ApplicationController
 
   skip_before_action :verify_authenticity_token
 
+  before_action :set_page_access
+
   def webhook
    if params['hub.verify_token'] == "pirate_cat_verify"
      render text: params['hub.challenge'] and return
@@ -10,30 +12,108 @@ class BotController < ApplicationController
    end
   end
 
+
   def receive_message
 
-     if params[:entry]
-       messaging_events = params[:entry][0][:messaging]
-         messaging_events.each do |event|
-         sender = event[:sender][:id]
-         if (text = event[:message] && event[:message][:text])
-          if text.to_s.downcase.include? "pictures"
-            send_links(sender, text)
-          else
-            repeat_text(sender, "You said: #{text}")
+    if params[:entry]
+
+      messaging_events = params[:entry][0][:messaging]
+      messaging_events.each do |event|
+        sender = event[:sender][:id]
+
+        if event[:message][:text] # User has sent a text response
+          response = event[:message][:text]
+          text = response.to_s.downcase
+
+          triggers = {
+            'meow' => 'joke_trigger',
+            'help' => 'help_trigger'
+          }
+
+          triggers.each do |trig, trig_method|
+            if text.include?(trig)
+              method = trig_method.constantize
+              method(sender, text)
+              break
+            end
           end
-         end
-       end
-     end
-     render nothing: true
+
+          plain_text(sender, "Hmmm.. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+          break
+
+        elsif event[:postback][:payload] # User has sent a payload
+          plain_text(sender, "Hmmm.. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+        else
+          plain_text(sender, "Hmmm.. Not sure what you mean. Try typing 'HELP' so I can give you a list of things you can chat about.")
+        end
+
+      end
+    end
+    render nothing: true
 
   end
 
 
 
 
+  def plain_text(sender, text)
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        text: text
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+  def joke_trigger
+    jokes = [
+      "What is it called when a cat wins a dog show? - A CAT_HAS_TROPHY!",
+      "Did you hear about the cat who drank 5 bowls of water? He set a new lap record.",
+      "What happened when the cat went to the flea circus? He stole the whole show!",
+      "Why don't cats play poker in the jungle? Too many cheetahs."
+    ]
+
+    body = {
+      recipient: {
+        id: sender
+      },
+      message: {
+        text: jokes.sample
+      }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+  def help_trigger
+   body = {
+    recipient: {
+      id: sender
+    },
+    message: {
+      text: "Need some help? Here are some options. Type MEOW for a cat joke, RECEIPT for a receipt of your last purchase, PRODUCTS for the top 3 tshirts in our shop, PICTURE for a fun picture of me and FACT for a fun cat fact!"
+    }
+    }.to_json
+    response = HTTParty.post(
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
+      body: body,
+      headers: { 'Content-Type' => 'application/json' }
+    )
+  end
+
+
+
   def repeat_text(sender, text)
-    page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
 
     body = {
       recipient: {
@@ -44,7 +124,7 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
@@ -53,7 +133,6 @@ class BotController < ApplicationController
 
 
   def send_links(sender, text)
-    page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
 
     body = {
       recipient: {
@@ -82,10 +161,16 @@ class BotController < ApplicationController
       }
     }.to_json
     response = HTTParty.post(
-      "https://graph.facebook.com/v2.6/me/messages?access_token=#{page_access_token}",
+      "https://graph.facebook.com/v2.6/me/messages?access_token=#{@page_access_token}",
       body: body,
       headers: { 'Content-Type' => 'application/json' }
     )
+  end
+
+  private
+
+  def set_page_access
+    @page_access_token = "CAAYvrTcIpJMBANAxFVGKOMPyIlOIIZB6GydpspBRuPLV1PqNqwTeDyhLCaPqkCgfqMi5Pk38bnoIS8ZC1ytRTckFW8QMlAUcjvza1q1tFAev7SisDL99STpvfi72cj6iVJlEZC8QAlMCmc7ZARn3ZBkEFZAuDWUQQUpexqtu9A2Mi6K2NMKPBlia7AMQbUmkbNFnPp9wtrrwZDZD"
   end
 
 end
