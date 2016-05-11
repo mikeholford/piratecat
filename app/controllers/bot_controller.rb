@@ -87,7 +87,7 @@ class BotController < ApplicationController
 
   end
 
-  def user_info
+  def get_user_details(sender, pa_token)
     details = HTTParty.get("https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}")
     eval(details)
   end
@@ -101,6 +101,8 @@ class BotController < ApplicationController
     # user_info_hash = eval(user_info)
 
     # first_name_val = user_info_hash[:first_name]
+
+    user_info = get_user_details(sender, pa_token)
 
     body = {
       recipient: {
