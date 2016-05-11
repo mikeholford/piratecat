@@ -96,7 +96,7 @@ class BotController < ApplicationController
       headers: { 'Content-Type' => 'application/json' }
     )
 
-    puts "user_details are: #{user_details}"
+    puts "First Name is: #{user_details[:first_name]}"
 
 
     body = {
