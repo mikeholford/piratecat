@@ -37,9 +37,8 @@ class BotController < ApplicationController
             'haha' => '😂😂😂',
             'lol' => '😂😂😂',
             'hey' => 'hey how are you?',
-            'good' => 'that is great!',
-            'thanks' => 'no problem',
-            'thanks!' => 'no problem',
+            'good' => 'great!',
+            'thanks' => 'no worries',
             'i love you' => 'i love you too'
           }
 
@@ -91,6 +90,15 @@ class BotController < ApplicationController
   def welcome_trigger(sender, text)
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
+
+    user_details = HTTParty.get(
+      "https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}",
+      headers: { 'Content-Type' => 'application/json' }
+    )
+
+    puts "user_details are: #{user_details}"
+
+
     body = {
       recipient: {
         id: sender
@@ -100,7 +108,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "👋 Hello!\n\nWelcome to the Pirate Cat Shop! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
+            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{user_details[:first_name]}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
             buttons: [
               {
                 type: "postback",
