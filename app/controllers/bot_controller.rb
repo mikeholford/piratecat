@@ -93,11 +93,13 @@ class BotController < ApplicationController
     user_details = HTTParty.get(
       "https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}"
     )
-    first_name = user_details["first_name"]
+    first_name_val = user_details["first_name"]
 
-    puts "first name is defined as #{first_name}"
+    puts "user details are: #{user_details}"
+    puts "user details first are: #{user_details.first}"
+    puts "first name is defined as #{first_name_val}"
     puts "in the hash it is #{user_details['first_name']}"
-    puts "or it is defined as #{user_details[:first_name]}"
+    puts "lets try and get it with #{user_details.first.first}"
 
     body = {
       recipient: {
