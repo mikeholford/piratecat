@@ -94,9 +94,6 @@ class BotController < ApplicationController
       "https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}"
     )
 
-    puts "Details are::: #{user_details}"
-:
-
     body = {
       recipient: {
         id: sender
