@@ -93,6 +93,7 @@ class BotController < ApplicationController
     user_details = HTTParty.get(
       "https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}"
     )
+    first_name = user_details["first_name"]
 
     body = {
       recipient: {
@@ -103,7 +104,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{user_details}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
+            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{first_name}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
             buttons: [
               {
                 type: "postback",
