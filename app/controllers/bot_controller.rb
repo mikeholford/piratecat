@@ -90,10 +90,12 @@ class BotController < ApplicationController
   def welcome_trigger(sender, text)
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
-    user_details = HTTParty.get(
+    user_info = HTTParty.get(
       "https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}"
     )
-    first_name_val = user_details["first_name"]
+    user_info_hash = eval(user_info)
+
+    first_name_val = user_info_hash[:first_name]
 
     puts "user details are: #{user_details}"
     puts "user details first are: #{user_details.first}"
@@ -110,7 +112,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{first_name}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
+            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{first_name_val}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
             buttons: [
               {
                 type: "postback",
