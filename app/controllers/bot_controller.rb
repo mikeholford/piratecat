@@ -97,12 +97,6 @@ class BotController < ApplicationController
 
     first_name_val = user_info_hash[:first_name]
 
-    puts "user details are: #{user_details}"
-    puts "user details first are: #{user_details.first}"
-    puts "first name is defined as #{first_name_val}"
-    puts "in the hash it is #{user_details['first_name']}"
-    puts "lets try and get it with #{user_details.first.first}"
-
     body = {
       recipient: {
         id: sender
