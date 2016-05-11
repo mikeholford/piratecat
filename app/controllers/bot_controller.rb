@@ -95,7 +95,7 @@ class BotController < ApplicationController
     )
 
     puts "Details are::: #{user_details}"
-
+:
 
     body = {
       recipient: {
@@ -106,7 +106,7 @@ class BotController < ApplicationController
           type: "template",
           payload: {
             template_type: "button",
-            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{user_details[:first_name]}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
+            text: "👋 Hello!\n\nWelcome to the Pirate Cat #{user_details['first_name']}! Select an option below to get started. Or type MEOW 🐱 to hear a funny cat joke.",
             buttons: [
               {
                 type: "postback",
