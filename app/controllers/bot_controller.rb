@@ -90,13 +90,13 @@ class BotController < ApplicationController
   def welcome_trigger(sender, text)
     pa_token = "EAAYvrTcIpJMBAKnpuuMF1tZC71AytZBZAzkNGRJbd5ETlBRFtDWvROaXwwAJPZAZBXUBrYMTY0qIKulZBWRYRAnoMXiAd03kJajbsbaXU9jHFP5GzG5ScGDwRwTDYvFoInR4iwZBmNzaThmiogvPjIctrs9MJMN0M7ps8YIolJL2wZDZD"
 
-
+    user_details = {};
     user_details = HTTParty.get(
       "https://graph.facebook.com/v2.6/#{sender}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=#{pa_token}",
       headers: { 'Content-Type' => 'application/json' }
     )
 
-    puts "First Name is: #{user_details[:first_name]}"
+    puts "First Name is: #{user_details}"
 
 
     body = {
